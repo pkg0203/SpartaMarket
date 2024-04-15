@@ -10,6 +10,12 @@
 </head>
 
 <body>
+    {%if request.user.is_authenticate%}
+        <a href="">로그아웃</a>
+        <a href="">탈퇴하기</a>
+    {%else %}
+        <a href="">로그인</a>
+    {%endif%}
     {%block content%}
     {%endblock content%}
 </body>
