@@ -14,7 +14,7 @@
         <a href="">로그아웃</a>
         <a href="">탈퇴하기</a>
     {%else %}
-        <a href="">로그인</a>
+        <a href="{%url 'accounts:login'%}">로그인</a>
     {%endif%}
     {%block content%}
     {%endblock content%}
