@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.views.decorators.http import (
     require_POST,
@@ -25,3 +26,8 @@ def signup(request):
             user=form.save()
             auth_login(request,user)
             return redirect("index")
+
+@require_POST        
+def logout(request):
+    auth_logout(request)
+    return redirect("index")
