@@ -6,7 +6,7 @@ from django.views.decorators.http import (
     )
 from django.contrib.auth.decorators import login_required
 from .models import Products
-from .forms import ProductsForm
+from .forms import ProductsForm,CommentsForm
 import ctypes
 
 @require_GET
@@ -40,8 +40,10 @@ def create(request):
 @require_GET
 def detail(request,pk):
     product = get_object_or_404(Products,pk=pk)
+    form = CommentsForm()
     context={
-        "product" : product
+        "product" : product,
+        "form" : form
     }
     return render(request,"products/detail.html",context)
 
