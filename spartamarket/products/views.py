@@ -62,3 +62,9 @@ def update(request,pk):
         if form.is_valid():
             product=form.save()
         return redirect('products:detail',product.pk)
+
+@require_POST    
+def delete(request,pk):
+    product = get_object_or_404(Products,pk=pk)
+    product.delete()
+    return redirect("products:show")
