@@ -17,3 +17,10 @@ def create(request):
             "form" : form,
         }
         return render(request,"products/create.html",context)
+    elif request.method=="POST":
+        form = ProductsForm(request.POST)
+        if form.is_valid():
+            product=form.save(commit=False)
+            product.author=request.user
+            product.save()
+            return redirect("products:show")

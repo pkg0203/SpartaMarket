@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Products(models.Model):
@@ -10,7 +11,7 @@ class Products(models.Model):
         on_delete=models.CASCADE,
         related_name="authors"
     )
-    price = models.IntegerField()
+    price = models.IntegerField(validators=[MinValueValidator(0)])
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
     is_selled = models.BooleanField(default=False)

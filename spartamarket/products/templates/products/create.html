@@ -2,8 +2,9 @@
 
 {%block content%}
 <h1>글 작성</h1>
-    <form action="" method="POST">
+    <form action="{%url 'products:create'%}" method="POST">
         {%csrf_token%}
         {{form.as_p}}
+        <button type="submit">작성하기</button>
     </form>
 {%endblock content%}
