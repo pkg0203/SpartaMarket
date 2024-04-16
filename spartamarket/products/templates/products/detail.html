@@ -9,4 +9,12 @@
         <h1>이미지있음</h1>
     {%endif%}
 
+    {%if request.user == product.author %}
+        <form action="{%url 'products:update' product.pk%}" method="GET">
+            <button type="submit">수정하기</button>
+        </form>
+        <form action="" method="POST">
+            <button type="submit">삭제하기</button>
+        </form>
+    {%endif%}
 {%endblock content%}

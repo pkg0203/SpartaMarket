@@ -1,9 +1,14 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.views.decorators.http import (
+    require_GET,
+    require_POST,
+    require_http_methods,
+    )
 from .models import Products
 from .forms import ProductsForm
 import ctypes
 
-# Create your views here.
+@require_GET
 def show(request):
     if request.user.is_authenticated:
         products = Products.objects.all()
@@ -30,10 +35,19 @@ def create(request):
             product.save()
         return redirect("products:show")
     
-
+@require_GET
 def detail(request,pk):
     product = get_object_or_404(Products,pk=pk)
     context={
         "product" : product
     }
     return render(request,"products/detail.html",context)
+
+@require_http_methods(["GET", "POST"])
+def update(request,pk):
+    if request.method=="GET":
+        product = get_object_or_404(Products,pk=pk)
+        context={
+            'product' : ProductsForm(instance=product)
+        }
+        return render(request,"products/update.html",context)
