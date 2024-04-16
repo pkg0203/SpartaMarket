@@ -52,3 +52,6 @@ def signup(request):
             user = form.save()
             auth_login(request, user)
             return redirect("index")
+        
+def mypage(request,pk):
+    return render(request,"accounts/mypage.html")
