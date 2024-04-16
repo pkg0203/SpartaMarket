@@ -1,5 +1,9 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    {{product.as_p}}
+    <form action="{%url 'products:update' product.pk%}" method="POST">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">수정하기</button>
+    </form>
 {%endblock content%}
