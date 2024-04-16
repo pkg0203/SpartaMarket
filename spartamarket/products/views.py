@@ -29,3 +29,7 @@ def create(request):
             product.author=request.user
             product.save()
         return redirect("products:show")
+    
+
+def detail(request,pk):
+    return render(request,"products/detail.html")

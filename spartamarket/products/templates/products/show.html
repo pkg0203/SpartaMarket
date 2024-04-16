@@ -4,7 +4,7 @@
 <h1>Let's shopping</h1>
 <ul>
     {%for product in products%}
-    <li>{{product.pk}} {{product.title}}</li>
+    <li>{{product.pk}} <a href="{%url 'products:detail' product.pk%}">{{product.title}}</a></li>
     {%endfor%}
 </ul>
 <form action="{%url 'products:create'%}" method="GET">
