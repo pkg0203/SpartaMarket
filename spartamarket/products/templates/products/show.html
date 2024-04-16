@@ -2,6 +2,11 @@
 
 {%block content%}
 <h1>Let's shopping</h1>
+<ul>
+    {%for product in products%}
+    <li>{{product.pk}} {{product.title}}</li>
+    {%endfor%}
+</ul>
 <form action="{%url 'products:create'%}" method="GET">
     <button type="submit">글 작성</button>
 </form>
