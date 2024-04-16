@@ -1,5 +1,7 @@
 # Sparta - Market
+**Django**를 배우고서 익숙해지고 개인과제로서 수행
 
+## 📑 ERD
 
 
 ## 🖥️ 프로젝트 소개
@@ -15,13 +17,13 @@ https://teamsparta.notion.site/3964141ecf7b401d84de9dd72aa04b8b
 
 
 ### ⚙️ 개발 환경
-- Backend : `Python`
-- Frontend : `HTML, CSS, JavaScript`
-- **Framework** : Django 4.2v
-- **Database** : SQLite3
+- **Backend** : `Python`
+- **Frontend** : `HTML, CSS, JavaScript`
+- **Framework** : 'Django 4.2v'
+- **Database** : 'SQLite3'
 <br>
 
-Django를 배우고서 익숙해지고자 이용
+
 
 ## 📌 주요 기능
 #### 회원가입
@@ -34,8 +36,7 @@ Django를 배우고서 익숙해지고자 이용
 - 로그인 시 메인 페이지에 로그인한 Id의 닉네임 표시
 - 로그인 시 게시글과 댓글 작성 가능(로그인 안하고 게시글 작성 시도 시, 로그인을 하라는 메세지와 함께 index.html로 돌아옴)
 #### 관리자 계정
-- DB에 자동 생성
-- ID : admin / PW : admin
+- ID : admin / PW : admin1234
 - 모든 게시글과 댓글 수정, 삭제 가능
 #### 게시글
 - 글 작성, 읽기, 수정, 삭제(CRUD)
