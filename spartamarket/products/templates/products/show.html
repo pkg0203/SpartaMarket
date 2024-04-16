@@ -2,4 +2,7 @@
 
 {%block content%}
 <h1>Let's shopping</h1>
+<form action="{%url 'products:create'%}" method="GET">
+    <button type="submit">글 작성</button>
+</form>
 {%endblock content%}
