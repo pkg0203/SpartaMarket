@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import Products
 from .forms import ProductsForm
 import ctypes
@@ -32,4 +32,8 @@ def create(request):
     
 
 def detail(request,pk):
-    return render(request,"products/detail.html")
+    product = get_object_or_404(Products,pk=pk)
+    context={
+        "product" : product
+    }
+    return render(request,"products/detail.html",context)

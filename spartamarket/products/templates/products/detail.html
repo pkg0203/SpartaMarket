@@ -1,6 +1,12 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<h1>detail</h1>
+    <h1>제목 : {{product.title}}</h1>
+    <h2>내용 : {{product.content}}</h2>
+    <h2>가격 : {{product.price}}</h2>
+
+    {%if product.image%}
+        <h1>이미지있음</h1>
+    {%endif%}
 
 {%endblock content%}
