@@ -20,3 +20,14 @@ class Products(models.Model):
         #Null= True 와는 다름
         blank=True
     )
+
+class Comments(models.Model):
+    products = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="comments")
+    content = models.TextField()
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="c_authors"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    edited_at = models.DateTimeField(auto_now=True)
