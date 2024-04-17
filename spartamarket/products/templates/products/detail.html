@@ -8,7 +8,11 @@
     {% if request.user != product.author %}
         <form action="{%url 'products:jjim' product.pk%}" method="POST">
             {%csrf_token%}
-            <button type="submit">찜</button>
+            {%if request.user in product.jjimed.all%}
+                <button type="submit">찜 취소</button>
+            {%else%}
+                <button type="submit">찜</button>
+            {%endif%}
         </form>
     {%endif%}
 
