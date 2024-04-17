@@ -17,3 +17,4 @@ class User(AbstractUser):
         related_name='followers',
         symmetrical=False
     )
+    created_at = models.DateTimeField(auto_now_add=True)

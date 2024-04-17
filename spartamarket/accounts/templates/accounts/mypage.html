@@ -2,6 +2,7 @@
 
 {%block content%}
     <h1>Hello {{user}}</h1>
+    <h3>가입일 : {{user.created_at}}</h3>
     {%if request.user != user %}
         <form action="{%url 'accounts:follow' user.pk%}" method="POST">
             {%csrf_token%}

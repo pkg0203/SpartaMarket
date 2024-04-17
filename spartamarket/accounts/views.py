@@ -60,6 +60,7 @@ def mypage(request,pk):
     }
     return render(request,"accounts/mypage.html",context)
 
+@require_POST
 def follow(request,pk):
     user = get_object_or_404(get_user_model(),pk=pk)
     if request.user == user:
