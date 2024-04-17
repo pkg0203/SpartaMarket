@@ -19,4 +19,10 @@
     <hr>
     <h2>내 게시글</h2><hr>
     <h2>내가 찜한 글</h2>
+    <ul>
+        {% for product in user.jjim.all %}
+            <li>{{ product.title }}</li>
+        {% endfor %}
+    </ul>
+    
 {%endblock content%}
