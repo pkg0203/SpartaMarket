@@ -52,10 +52,21 @@ def signup(request):
             user = form.save()
             auth_login(request, user)
             return redirect("index")
-        
+
 def mypage(request,pk):
     user = get_object_or_404(get_user_model(),pk=pk)
     context = {
         "user" : user
     }
     return render(request,"accounts/mypage.html",context)
+
+def follow(request,pk):
+    user = get_object_or_404(get_user_model(),pk=pk)
+    if request.user == user:
+        pass
+    else :
+        if request.user in user.followers.all():
+            user.followers.remove(request.user)
+        else :
+            user.followers.add(request.user)
+        return redirect('accounts:mypage',user.pk)

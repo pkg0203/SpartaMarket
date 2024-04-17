@@ -3,9 +3,16 @@
 {%block content%}
     <h1>Hello {{user}}</h1>
     {%if request.user != user %}
-        <form action="" method="POST">
+        <form action="{%url 'accounts:follow' user.pk%}" method="POST">
             {%csrf_token%}
-            <button type="submit">팔로우</button>
+            {%if request.user in user.followers.all %}
+                <button type="submit">언팔로우</button>
+            {%else%}
+                <button type="submit">팔로우</button>
+            {%endif%}
         </form>
     {%endif%}
+    <hr>
+    <h2>팔로워 : {{user.followers.all.count}}</h2>
+    <h2>팔로잉 : {{user.follow.all.count}}</h2>
 {%endblock content%}
