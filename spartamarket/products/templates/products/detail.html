@@ -30,8 +30,8 @@
             {{ comment.author }}
             {{ comment.content }}
         {%if comment.author == request.user%}
-            <form action="">
-                <button>수정</button>
+            <form action="{%url 'products:update_comment' comment.pk%}" method="GET">
+                <button type="submit">수정</button>
             </form>
             <form action="{%url 'products:delete_comment' comment.pk%}" method="POST">
                 {%csrf_token%}
