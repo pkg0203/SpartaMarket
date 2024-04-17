@@ -5,6 +5,7 @@
     <h2>내용 : {{product.content}}</h2>
     <h2>작성자 : {{product.author}}</h2>
     <h2>가격 : {{product.price}}</h2>
+    <h2>조회수 : {{product.is_viewed}}</h2>
     {% if request.user != product.author %}
         <form action="{%url 'products:jjim' product.pk%}" method="POST">
             {%csrf_token%}

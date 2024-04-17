@@ -20,6 +20,7 @@ class Products(models.Model):
         #Null= True 와는 다름
         blank=True
     )
+    is_viewed = models.IntegerField(default=0)
 
 class Comments(models.Model):
     products = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="comments")
