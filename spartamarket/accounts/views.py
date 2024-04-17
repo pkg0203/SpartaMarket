@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
@@ -54,4 +54,8 @@ def signup(request):
             return redirect("index")
         
 def mypage(request,pk):
-    return render(request,"accounts/mypage.html")
+    user = get_object_or_404(get_user_model(),pk=pk)
+    context = {
+        "user" : user
+    }
+    return render(request,"accounts/mypage.html",context)

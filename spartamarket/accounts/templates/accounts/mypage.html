@@ -1,5 +1,11 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    <h1>Hello {{request.user}}</h1>
+    <h1>Hello {{user}}</h1>
+    {%if request.user != user %}
+        <form action="" method="POST">
+            {%csrf_token%}
+            <button type="submit">팔로우</button>
+        </form>
+    {%endif%}
 {%endblock content%}
