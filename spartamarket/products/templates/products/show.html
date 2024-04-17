@@ -2,6 +2,10 @@
 
 {%block content%}
 <h1>Let's shopping</h1>
+<form action="{%url 'products:search'%}" method="GET">
+    <input type="text" name ="search" id="search">
+    <button>검색하기</button>
+</form>
 <ul>
     {%for product in products%}
     <li>{{product.pk}} <a href="{%url 'products:detail' product.pk%}">{{product.title}}</a></li>

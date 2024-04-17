@@ -7,6 +7,7 @@ from django.views.decorators.http import (
 from django.contrib.auth.decorators import login_required
 from .models import Products, Comments
 from .forms import ProductsForm, CommentsForm
+from django.db.models import Q
 import ctypes
 
 
@@ -21,6 +22,21 @@ def show(request):
     else:
         ctypes.windll.user32.MessageBoxW(0, "로그인이 필요합니다!", "Error", 16)
         return redirect("accounts:login")
+
+
+@require_GET
+def search(request):
+    if request.user.is_authenticated:
+        search = request.GET.get('search')
+        products = Products.objects.filter(
+            Q(title__icontains=search) |
+            Q(content__icontains=search) |
+            Q(author__username__icontains=search)
+        ).order_by('-pk')
+        context = {
+            "products": products
+        }
+        return render(request,"products/show.html", context)
 
 
 @require_http_methods(["GET", "POST"])
