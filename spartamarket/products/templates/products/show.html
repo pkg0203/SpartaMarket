@@ -3,8 +3,12 @@
 {%block content%}
 <h1>Let's shopping</h1>
 <form action="{%url 'products:search'%}" method="GET">
-    <input type="text" name ="search" id="search">
-    <button>검색하기</button>
+    <input type="text" name="search" id="search">
+    <button type="submit">검색하기</button>
+</form>
+<form action="" method="GET">
+    <button type="submit">인기순 정렬</button>
+    <button type="submit">최신순 정렬</button>
 </form>
 <ul>
     {%for product in products%}
