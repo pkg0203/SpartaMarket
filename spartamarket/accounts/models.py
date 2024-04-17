@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from products.models import Products
 
 class User(AbstractUser):
     class GenderChoices(models.TextChoices):
@@ -15,6 +15,11 @@ class User(AbstractUser):
     follow = models.ManyToManyField(
         'self',
         related_name='followers',
+        symmetrical=False
+    )
+    jjim = models.ManyToManyField(
+        Products,
+        related_name='jjimed',
         symmetrical=False
     )
     created_at = models.DateTimeField(auto_now_add=True)

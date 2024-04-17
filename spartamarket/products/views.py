@@ -110,3 +110,12 @@ def update_comment(request, pk):
         if form.is_valid():
             comment=form.save()
         return redirect('products:detail',comment.products.pk)
+    
+@require_POST
+def jjim(request,pk):
+    product = get_object_or_404(Products,pk=pk)
+    if request.user in product.jjimed.all():
+        request.user.jjim.remove(product)
+    else :
+        request.user.jjim.add(product)
+    return redirect('products:detail',product.pk)

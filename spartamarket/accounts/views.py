@@ -8,7 +8,6 @@ from django.views.decorators.http import (
 )
 from django.contrib.auth.forms import (
     AuthenticationForm,
-    PasswordChangeForm,
 )
 from .forms import *
 import ctypes
