@@ -40,7 +40,7 @@ def create(request):
 @require_GET
 def detail(request,pk):
     product = get_object_or_404(Products,pk=pk)
-    comments = Comments.objects.all()
+    comments = product.comments.all().order_by('-pk')
     form = CommentsForm()
     context={
         "product" : product,
