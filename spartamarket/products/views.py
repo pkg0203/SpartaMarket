@@ -82,3 +82,10 @@ def create_comment(request,pk):
         comment.products=get_object_or_404(Products,pk=pk)
         comment.save()
     return redirect('products:detail',comment.products.pk)
+
+@require_POST
+def delete_comment(request,pk):
+    comment = get_object_or_404(Comments,pk=pk)
+    product = comment.products
+    comment.delete()
+    return redirect('products:detail',product.pk)

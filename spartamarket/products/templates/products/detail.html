@@ -29,6 +29,15 @@
         <ol>
             {{ comment.author }}
             {{ comment.content }}
+        {%if comment.author == request.user%}
+            <form action="">
+                <button>수정</button>
+            </form>
+            <form action="{%url 'products:delete_comment' comment.pk%}" method="POST">
+                {%csrf_token%}
+                <button type="submit">삭제</button>
+            </form>
+        {%endif%}
         </ol>
     {% endfor %}
     
