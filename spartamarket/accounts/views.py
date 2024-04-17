@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.models import User
 from django.views.decorators.http import (
     require_POST,
     require_http_methods
@@ -9,6 +8,7 @@ from django.views.decorators.http import (
 from django.contrib.auth.forms import (
     AuthenticationForm,
 )
+from products.models import Products
 from .forms import *
 import ctypes
 
@@ -54,8 +54,10 @@ def signup(request):
 
 def mypage(request,pk):
     user = get_object_or_404(get_user_model(),pk=pk)
+    products = Products.objects.filter(author=pk)
     context = {
-        "user" : user
+        "user" : user,
+        "products" : products
     }
     return render(request,"accounts/mypage.html",context)
 
