@@ -3,6 +3,8 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
+
+
 class Products(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
@@ -17,13 +19,15 @@ class Products(models.Model):
     is_selled = models.BooleanField(default=False)
     image = models.ImageField(
         upload_to="images/",
-        #Null= True 와는 다름
+        # Null= True 와는 다름
         blank=True
     )
     is_viewed = models.IntegerField(default=0)
 
+
 class Comments(models.Model):
-    products = models.ForeignKey(Products, on_delete=models.CASCADE,related_name="comments")
+    products = models.ForeignKey(
+        Products, on_delete=models.CASCADE, related_name="comments")
     content = models.TextField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,

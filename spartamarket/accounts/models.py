@@ -2,13 +2,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from products.models import Products
 
+
 class User(AbstractUser):
     class GenderChoices(models.TextChoices):
         MALE = 'M', '남성'
         FEMALE = 'F', '여성'
     age = models.IntegerField()
     gender = models.CharField(
-        choices=GenderChoices.choices, 
+        choices=GenderChoices.choices,
         max_length=1,
         blank=False
     )

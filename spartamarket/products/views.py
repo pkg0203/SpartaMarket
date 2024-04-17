@@ -43,7 +43,7 @@ def create(request):
 @require_GET
 def detail(request, pk):
     product = get_object_or_404(Products, pk=pk)
-    product.is_viewed+=1
+    product.is_viewed += 1
     product.save()
     comments = product.comments.all().order_by('-pk')
     form = CommentsForm()
@@ -98,26 +98,28 @@ def delete_comment(request, pk):
     comment.delete()
     return redirect('products:detail', product.pk)
 
+
 @require_http_methods(["GET", "POST"])
 def update_comment(request, pk):
     comment = get_object_or_404(Comments, pk=pk)
-    if request.method=="GET":
-        form =CommentsForm(instance=comment)
+    if request.method == "GET":
+        form = CommentsForm(instance=comment)
         context = {
-            "form" : form
+            "form": form
         }
-        return render(request,"products/comment_update.html",context)
-    else :
-        form = CommentsForm(request.POST,instance=comment)
+        return render(request, "products/comment_update.html", context)
+    else:
+        form = CommentsForm(request.POST, instance=comment)
         if form.is_valid():
-            comment=form.save()
-        return redirect('products:detail',comment.products.pk)
-    
+            comment = form.save()
+        return redirect('products:detail', comment.products.pk)
+
+
 @require_POST
-def jjim(request,pk):
-    product = get_object_or_404(Products,pk=pk)
+def jjim(request, pk):
+    product = get_object_or_404(Products, pk=pk)
     if request.user in product.jjimed.all():
         request.user.jjim.remove(product)
-    else :
+    else:
         request.user.jjim.add(product)
-    return redirect('products:detail',product.pk)
+    return redirect('products:detail', product.pk)

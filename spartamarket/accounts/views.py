@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.views.decorators.http import (
@@ -27,7 +27,8 @@ def login(request):
             next_url = request.GET.get('next') or 'index'
             auth_login(request, form.get_user())
             return redirect(next_url)
-        ctypes.windll.user32.MessageBoxW(0, "아이디나 비밀번호가 유효하지 않습니다!", "Error", 16)
+        ctypes.windll.user32.MessageBoxW(
+            0, "아이디나 비밀번호가 유효하지 않습니다!", "Error", 16)
         return redirect('index')
 
 
@@ -52,23 +53,25 @@ def signup(request):
             auth_login(request, user)
             return redirect("index")
 
-def mypage(request,pk):
-    user = get_object_or_404(get_user_model(),pk=pk)
+
+def mypage(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
     products = Products.objects.filter(author=pk)
     context = {
-        "user" : user,
-        "products" : products
+        "user": user,
+        "products": products
     }
-    return render(request,"accounts/mypage.html",context)
+    return render(request, "accounts/mypage.html", context)
+
 
 @require_POST
-def follow(request,pk):
-    user = get_object_or_404(get_user_model(),pk=pk)
+def follow(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
     if request.user == user:
         pass
-    else :
+    else:
         if request.user in user.followers.all():
             user.followers.remove(request.user)
-        else :
+        else:
             user.followers.add(request.user)
-        return redirect('accounts:mypage',user.pk)
+        return redirect('accounts:mypage', user.pk)

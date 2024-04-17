@@ -4,14 +4,14 @@
     <h1>Hello {{user}}</h1>
     <h3>가입일 : {{user.created_at}}</h3>
     {%if request.user != user %}
-        <form action="{%url 'accounts:follow' user.pk%}" method="POST">
-            {%csrf_token%}
-            {%if request.user in user.followers.all %}
-                <button type="submit">언팔로우</button>
-            {%else%}
-                <button type="submit">팔로우</button>
-            {%endif%}
-        </form>
+    <form action="{%url 'accounts:follow' user.pk%}" method="POST">
+        {%csrf_token%}
+        {%if request.user in user.followers.all %}
+        <button type="submit">언팔로우</button>
+        {%else%}
+        <button type="submit">팔로우</button>
+        {%endif%}
+    </form>
     {%endif%}
     <hr>
     <h2>팔로워 : {{user.followers.all.count}}</h2>
@@ -20,14 +20,14 @@
     <h2>내 게시글</h2>
     <ul>
         {% for product in products %}
-            <li>{{ product.title }}</li>
+        <li>{{ product.title }}</li>
         {% endfor %}
-    </ul><hr>
+    </ul>
+    <hr>
     <h2>내가 찜한 글</h2>
     <ul>
         {% for product in user.jjim.all %}
-            <li>{{ product.title }}</li>
+        <li>{{ product.title }}</li>
         {% endfor %}
     </ul>
-    
 {%endblock content%}
