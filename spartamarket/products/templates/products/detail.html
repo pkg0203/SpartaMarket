@@ -20,9 +20,17 @@
         </form>
     {%endif%}
     <hr>
-    <form action="" method="POST">
+    <form action="{%url 'products:create_comment' product.pk%}" method="POST">
         {%csrf_token%}
         {{form.as_p}}
-        <button>등록</button>
-    </form>
+        <button type="submit">등록</button>
+    </form><hr>
+    {% for comment in comments %}
+        <ol>
+            {{ comment.author }}
+            {{ comment.content }}
+        </ol>
+    {% endfor %}
+    
+
 {%endblock content%}

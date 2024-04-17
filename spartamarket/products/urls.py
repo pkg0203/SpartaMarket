@@ -4,8 +4,11 @@ from . import views
 app_name = "products"
 urlpatterns=[
     path('show/',views.show,name='show'),
+    #Products CRUD
     path('create/',views.create,name='create'),
     path('<int:pk>/detail',views.detail,name='detail'),
     path('<int:pk>/update',views.update,name='update'),
     path('<int:pk>/delete',views.delete,name='delete'),
+    
+    path('<int:pk>/comment',views.create_comment,name='create_comment'),
 ]
