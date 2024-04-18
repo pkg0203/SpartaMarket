@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -59,7 +60,7 @@ def mypage(request, pk):
     products = Products.objects.filter(author=pk)
     context = {
         "user": user,
-        "products": products
+        "products": products,
     }
     return render(request, "accounts/mypage.html", context)
 
