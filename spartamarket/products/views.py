@@ -34,12 +34,14 @@ def search_and_sort(request):
             products = Products.objects.filter(
                 Q(title__icontains=search) |
                 Q(content__icontains=search) |
+                Q(hashtags__title__exact=search) |
                 Q(author__username__icontains=search)
             ).order_by('-pk')
         elif sort == "jjim":
             products = Products.objects.filter(
                 Q(title__icontains=search) |
                 Q(content__icontains=search) |
+                Q(hashtags__title__exact=search) |
                 Q(author__username__icontains=search)
             ).annotate(jjim_count=Count('jjimed')).order_by('-jjim_count')
         context = {
