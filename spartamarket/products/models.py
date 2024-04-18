@@ -1,8 +1,11 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
-
 # Create your models here.
+
+
+class HashTag(models.Model):
+    title = models.CharField(max_length=50)
 
 
 class Products(models.Model):
@@ -23,6 +26,11 @@ class Products(models.Model):
         blank=True
     )
     is_viewed = models.IntegerField(default=0)
+    hashtags = models.ManyToManyField(
+        HashTag,
+        blank=True,
+        related_name="products"
+    )
 
 
 class Comments(models.Model):
@@ -36,7 +44,3 @@ class Comments(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
-
-
-class HashTag(models.Model):
-    title = models.CharField(max_length=50)
