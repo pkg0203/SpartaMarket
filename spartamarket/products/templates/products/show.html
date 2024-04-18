@@ -7,8 +7,9 @@
     <button type="submit">검색하기</button>
 </form>
 <form action="" method="GET">
-    <button type="submit">인기순 정렬</button>
-    <button type="submit">최신순 정렬</button>
+    <input type="hidden" name="products" value="{{ products|join:',' }}">
+    <button type="submit" name="sort" value="jjim">인기순 정렬</button>
+    <button type="submit" name="sort" value="recent">최신순 정렬</button>
 </form>
 <ul>
     {%for product in products%}

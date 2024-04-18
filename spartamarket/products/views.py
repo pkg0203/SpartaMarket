@@ -37,6 +37,20 @@ def search(request):
             "products": products
         }
         return render(request,"products/show.html", context)
+    
+
+@require_GET
+def sort(request):
+    if request.user.is_authenticated:
+        products_str = request.GET.get('products', '')  # GET 요청에서 products 값 가져오기
+        products_list = products_str.split(',') if products_str else []  # 쉼표로 구분된 문자열을 리스트로 변환
+        sort = request.GET.get('sort')
+        if sort=="recent":
+            print(products_list[0])
+            print(sort)
+        elif sort == "jjim":
+            print(products_list)
+            print(sort)
 
 
 @require_http_methods(["GET", "POST"])

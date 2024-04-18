@@ -5,6 +5,7 @@ app_name = "products"
 urlpatterns = [
     path('show/', views.show, name='show'),
     path('search/', views.search, name='search'),
+    path('sort/', views.sort, name='sort'),
     # Products CRUD
     path('create/', views.create, name='create'),
     path('<int:pk>/detail', views.detail, name='detail'),
