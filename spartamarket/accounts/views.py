@@ -80,7 +80,9 @@ def follow(request, pk):
 
 @require_POST
 def update_profile(request, pk):
-    user = get_object_or_404(get_user_model(), pk=pk)
-    user.profile_image = request.FILES
-    user.save()
+    user=get_object_or_404(get_user_model(), pk=pk)
+    form = CustomProfileUpdateForm(request.POST,request.FILES,instance=user)
+    if form.is_valid():
+        form.save()
+        print("success!!!!!!!!!!!!!!!!!")
     return redirect('accounts:mypage', pk)

@@ -5,8 +5,8 @@
     {%if request.user == user%}
         <form action="{%url 'accounts:update_profile' user.pk%}" method="POST" enctype="multipart/form-data">
             {%csrf_token%}
-            <input type="file" name="image" required>
             <button type="submit">프로필 사진 변경</button>
+            <input type="file" name="image" required>
         </form>
     {%endif%}
     <h1>Hello {{user}}</h1>
