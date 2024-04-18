@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('<int:pk>/mypage/', views.mypage, name='mypage'),
     path('<int:pk>/follow/', views.follow, name='follow'),
+    path('<int:pk>/update_profile/', views.update_profile, name='update_profile'),
 ]
 
 

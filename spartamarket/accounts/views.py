@@ -76,3 +76,11 @@ def follow(request, pk):
         else:
             user.followers.add(request.user)
         return redirect('accounts:mypage', user.pk)
+
+
+@require_POST
+def update_profile(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    user.profile_image = request.FILES
+    user.save()
+    return redirect('accounts:mypage', pk)

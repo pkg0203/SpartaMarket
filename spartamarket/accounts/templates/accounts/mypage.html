@@ -2,6 +2,13 @@
 
 {%block content%}
     <img src="{{user.profile_image.url}}" style="width:200px">
+    {%if request.user == user%}
+        <form action="{%url 'accounts:update_profile' user.pk%}" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            <input type="file" name="image" required>
+            <button type="submit">프로필 사진 변경</button>
+        </form>
+    {%endif%}
     <h1>Hello {{user}}</h1>
     <h3>가입일 : {{user.created_at}}</h3>
     {%if request.user != user %}
