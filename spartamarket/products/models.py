@@ -36,3 +36,7 @@ class Comments(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
+
+
+class HashTag(models.Model):
+    title = models.CharField(max_length=50)

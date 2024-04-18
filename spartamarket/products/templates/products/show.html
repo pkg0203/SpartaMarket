@@ -2,14 +2,10 @@
 
 {%block content%}
 <h1>Let's shopping</h1>
-<form action="{%url 'products:search'%}" method="GET">
+<form action="{%url 'products:search_and_sort'%}" method="GET">
     <input type="text" name="search" id="search">
-    <button type="submit">검색하기</button>
-</form>
-<form action="" method="GET">
-    <input type="hidden" name="products" value="{{ products|join:',' }}">
-    <button type="submit" name="sort" value="jjim">인기순 정렬</button>
-    <button type="submit" name="sort" value="recent">최신순 정렬</button>
+    <button type="submit" name="sort" value="jjim">인기순으로 검색</button>
+    <button type="submit" name="sort" value="recent">최신순으로 검색</button>
 </form>
 <ul>
     {%for product in products%}
