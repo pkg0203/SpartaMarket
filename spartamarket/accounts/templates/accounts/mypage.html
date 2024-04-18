@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 
 {%block content%}
+    <img src="{{user.profile_image.url}}" alt="">
     <h1>Hello {{user}}</h1>
     <h3>가입일 : {{user.created_at}}</h3>
     {%if request.user != user %}

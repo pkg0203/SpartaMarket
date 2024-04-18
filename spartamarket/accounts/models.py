@@ -24,4 +24,7 @@ class User(AbstractUser):
         symmetrical=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    profile_image = models.ImageField(default='./static/image/default_profile.png')
+    profile_image = models.ImageField(
+        default='./images/default_profile.png',
+        upload_to='images/',
+    )
