@@ -5,18 +5,17 @@ from django.views.decorators.http import (
     require_http_methods,
 )
 from django.contrib.auth.decorators import login_required
-from .models import Products, Comments
+from .models import Products, Comments,HashTag
 from .forms import ProductsForm, CommentsForm
-from django.db.models import Q,Count
+from django.db.models import Q, Count
 import ctypes
+SPECIAL_CHAR = list("[~!@\#$%^&*\()\=+|\\/:;?""<>']")
 
 
 @require_GET
 def show(request):
     if request.user.is_authenticated:
         products = Products.objects.all().order_by('-pk')
-        print("-show-")
-        print(products)
         context = {
             "products": products
         }
@@ -31,7 +30,7 @@ def search_and_sort(request):
     if request.user.is_authenticated:
         search = request.GET.get('search')
         sort = request.GET.get('sort')
-        if sort=="recent" :
+        if sort == "recent":
             products = Products.objects.filter(
                 Q(title__icontains=search) |
                 Q(content__icontains=search) |
@@ -46,8 +45,8 @@ def search_and_sort(request):
         context = {
             "products": products
         }
-        return render(request,"products/show.html", context)
-    
+        return render(request, "products/show.html", context)
+
 
 @require_http_methods(["GET", "POST"])
 def create(request):
@@ -59,10 +58,23 @@ def create(request):
         return render(request, "products/create.html", context)
     elif request.method == "POST":
         form = ProductsForm(request.POST)
+        hashtags=request.POST.get('hashtag').split()
+        #Hashtag 특수문자 검사
+        for hashtag in hashtags:
+            if hashtag in SPECIAL_CHAR:
+                ctypes.windll.user32.MessageBoxW(
+                    0, "해시태그에 특수문자가 섞여있습니다.", "Error", 16
+                )
+                return render(request,'products:show')
+        #Hashtag에 특수문자가 없고, form이 유효한 경우    
         if form.is_valid():
             product = form.save(commit=False)
             product.author = request.user
             product.save()
+            for hashtag in hashtags:
+                hash_obj, created = HashTag.objects.get_or_create(title=hashtag)
+                product.hashtags.add(hash_obj)
+
         return redirect("products:show")
 
 

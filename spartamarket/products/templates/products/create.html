@@ -5,6 +5,9 @@
     <form action="{%url 'products:create'%}" method="POST">
         {%csrf_token%}
         {{form.as_p}}
+        <h4>해시태그는 띄어쓰기로 구분해주세요.</h4>
+        <label for="hashtag">hashtag: </label>
+        <input type="text" id="hashtag" name="hashtag"><br><br>
         <button type="submit">작성하기</button>
     </form>
 {%endblock content%}

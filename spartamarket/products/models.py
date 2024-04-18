@@ -29,7 +29,7 @@ class Products(models.Model):
     hashtags = models.ManyToManyField(
         HashTag,
         blank=True,
-        related_name="products"
+        related_name="hashtags"
     )
 
 
