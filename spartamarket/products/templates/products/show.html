@@ -9,7 +9,14 @@
 </form>
 <ul>
     {%for product in products%}
-    <li>{{product.pk}} <a href="{%url 'products:detail' product.pk%}">{{product.title}}</a></li>
+    <li>{{product.pk}} 
+        <a href="{%url 'products:detail' product.pk%}">{{product.title}}</a>
+        <div style="color:blue">
+            {%for hashtag in product.hashtags.all%}
+                #{{hashtag.title}}
+            {%endfor%}
+        </div>
+    </li>
     {%endfor%}
 </ul>
 <form action="{%url 'products:create'%}" method="GET">
