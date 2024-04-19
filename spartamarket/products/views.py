@@ -12,45 +12,39 @@ import ctypes
 SPECIAL_CHAR = list("[~!@\#$%^&*\()\=+|\\/:;?""<>']")
 
 
+@login_required
 @require_GET
 def show(request):
-    if request.user.is_authenticated:
-        products = Products.objects.all().order_by('-pk')
-        context = {
-            "products": products
-        }
-        return render(request, "products/show.html", context)
-    else:
-        ctypes.windll.user32.MessageBoxW(0, "로그인이 필요합니다!", "Error", 16)
-        return redirect("accounts:login")
+    products = Products.objects.all().order_by('-pk')
+    context = {
+        "products": products
+    }
+    return render(request, "products/show.html", context)
 
 
+@login_required
 @require_GET
 def search_and_sort(request):
-    if request.user.is_authenticated:
-        search = request.GET.get('search')
-        sort = request.GET.get('sort')
-        if sort == "recent":
-            products = Products.objects.filter(
-                Q(title__icontains=search) |
-                Q(content__icontains=search) |
-                Q(hashtags__title__exact=search) |
-                Q(author__username__icontains=search)
-            ).order_by('-pk')
-        elif sort == "jjim":
-            products = Products.objects.filter(
-                Q(title__icontains=search) |
-                Q(content__icontains=search) |
-                Q(hashtags__title__exact=search) |
-                Q(author__username__icontains=search)
-            ).annotate(jjim_count=Count('jjimed')).order_by('-jjim_count')
-        context = {
-            "products": products
-        }
-        return render(request, "products/show.html", context)
-    else:
-        ctypes.windll.user32.MessageBoxW(0, "로그인이 필요합니다!", "Error", 16)
-        return redirect("accounts:login")
+    search = request.GET.get('search')
+    sort = request.GET.get('sort')
+    if sort == "recent":
+        products = Products.objects.filter(
+            Q(title__icontains=search) |
+            Q(content__icontains=search) |
+            Q(hashtags__title__exact=search) |
+            Q(author__username__icontains=search)
+        ).order_by('-pk')
+    elif sort == "jjim":
+        products = Products.objects.filter(
+            Q(title__icontains=search) |
+            Q(content__icontains=search) |
+            Q(hashtags__title__exact=search) |
+            Q(author__username__icontains=search)
+        ).annotate(jjim_count=Count('jjimed')).order_by('-jjim_count')
+    context = {
+        "products": products
+    }
+    return render(request, "products/show.html", context)
 
 
 @require_http_methods(["GET", "POST"])
@@ -87,23 +81,21 @@ def create(request):
         return redirect("accounts:login")
 
 
+@login_required
 @require_GET
 def detail(request, pk):
-    if request.user.is_authenticated:
-        product = get_object_or_404(Products, pk=pk)
-        product.is_viewed += 1
-        product.save()
-        comments = product.comments.all().order_by('-pk')
-        form = CommentsForm()
-        context = {
-            "product": product,
-            "form": form,
-            "comments": comments
-        }
-        return render(request, "products/detail.html", context)
-    else:
-        ctypes.windll.user32.MessageBoxW(0, "로그인이 필요합니다!", "Error", 16)
-        return redirect("accounts:login")
+
+    product = get_object_or_404(Products, pk=pk)
+    product.is_viewed += 1
+    product.save()
+    comments = product.comments.all().order_by('-pk')
+    form = CommentsForm()
+    context = {
+        "product": product,
+        "form": form,
+        "comments": comments
+    }
+    return render(request, "products/detail.html", context)
 
 
 @require_http_methods(["GET", "POST"])
