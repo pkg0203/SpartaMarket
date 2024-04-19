@@ -2,5 +2,9 @@
 {%load static%}
 
 {%block content%}
-<img src="{%static 'images/0.99person.PNG'%}" style="width: 80%; margin-left: 10%; margin-top: 10%;">
+    {%if not request.user.is_authenticated%}
+    <img src="{%static 'images/not_login.PNG'%}" style="width: 70%; margin-left: 15%;">
+    {%else%}
+    <img src="{%static 'images/had_login.PNG'%}" style="width: 60%; margin-left: 20%;">
+    {%endif%}
 {%endblock content%}
