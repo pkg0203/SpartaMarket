@@ -49,7 +49,7 @@ def signup(request):
         return render(request, "accounts/signup.html", context)
     else:
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect("index")
@@ -81,8 +81,11 @@ def follow(request, pk):
 @require_POST
 def update_profile(request, pk):
     user=get_object_or_404(get_user_model(), pk=pk)
-    form = CustomProfileUpdateForm(request.POST,request.FILES,instance=user)
+    form = CustomProfileUpdateForm(data=request.POST,files=request.FILES,instance=user)
+    print(request.FILES)
     if form.is_valid():
-        form.save()
-        print("success!!!!!!!!!!!!!!!!!")
+        user=form.save(commit=False)
+        #column name과 input name이 같으면 get을 안 해도 된다.
+        user.profile_image=request.FILES.get('image')
+        user.save()
     return redirect('accounts:mypage', pk)
