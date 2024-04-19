@@ -7,18 +7,27 @@
     <button type="submit" name="sort" value="jjim">인기순으로 검색</button>
     <button type="submit" name="sort" value="recent">최신순으로 검색</button>
 </form>
-<ul>
-    {%for product in products%}
-    <li>{{product.pk}} 
-        <a href="{%url 'products:detail' product.pk%}">{{product.title}}</a>
-        <div style="color:blue">
-            {%for hashtag in product.hashtags.all%}
-                #{{hashtag.title}}
-            {%endfor%}
+<div class="d-flex flex-wrap">
+    {% for product in products %}
+    <div class="card text-bg-dark m-3" style="width: 30%;">
+        <img src="{{ product.image.url }}" class="card-img-top">
+        <div class="card-body">
+            <div class="row">
+                <h5 class="card-title"><{{ product.title }}></h5>
+                <h5 class="card-content">{{ product.author }}</h5>
+            </div>
+            <p class="card-text">{{ product.price }}</p>
+            <a href="{% url 'products:detail' product.pk %}" class="btn btn-primary">글 자세히 보기</a>
+            <div style="color:red">
+                {% for hashtag in product.hashtags.all %}
+                #{{ hashtag.title }}
+                {% endfor %}
+            </div>
         </div>
-    </li>
-    {%endfor%}
-</ul>
+    </div>
+    {% endfor %}
+</div>
+
 <form action="{%url 'products:create'%}" method="GET">
     <button type="submit">글 작성</button>
 </form>

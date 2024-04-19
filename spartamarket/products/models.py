@@ -22,6 +22,7 @@ class Products(models.Model):
     is_selled = models.BooleanField(default=False)
     image = models.ImageField(
         upload_to="images/",
+        default='./images/default_image.PNG',
         # Null= True 와는 다름
         blank=True
     )
