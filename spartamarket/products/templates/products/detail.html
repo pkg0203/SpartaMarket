@@ -22,7 +22,7 @@
                 <strong>￦ {{ product.price }}</strong>
             </div>
             {% else %}
-            <div style="background-color: red; border-radius: 30px; width: 150px; margin-left: 10px;">
+            <div style="background-color: red; border-radius: 30px; width: 150px; margin-left: 10px; ">
                 <strong>나눔 중!</strong>
             </div>
             {% endif %}
@@ -34,11 +34,12 @@
                 {{ product.is_viewed }}
             </h2>
         </div>
-        <div class="col">
+        <div class="col" style="font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;">
             <h2>
-                <span class="material-symbols-outlined">favorite</span>
+                <span class="material-symbols-outlined" style="color: red;">favorite</span>
                 {{ product.jjimed.count }}
             </h2>
+                
         </div>
     </div>
     <hr style="color: white; height: 3px;">
@@ -78,7 +79,6 @@
         </form>
     </div>
 </div>
-
 {%endif%}
 
 <form action="{%url 'products:create_comment' product.pk%}" method="POST">
