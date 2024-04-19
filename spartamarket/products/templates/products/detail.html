@@ -56,7 +56,9 @@
     <form action="{%url 'products:jjim' product.pk%}" method="POST">
         {%csrf_token%}
         {%if request.user in product.jjimed.all%}
-        <button type="submit">찜 취소</button>
+
+            <span class="material-symbols-outlined" style="color: red;"><button type="submit">favorite</button></span>
+        
         {%else%}
         <button type="submit">찜</button>
         {%endif%}
@@ -83,8 +85,18 @@
 
 <form action="{%url 'products:create_comment' product.pk%}" method="POST">
     {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit">등록</button>
+    <div class="row">
+        <div class="col m-2">
+            <div class="d-flex" style="width: 60%;">
+                <div style="flex-grow: 1;">
+                    {{ form.content }}
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <hr>
 {% for comment in comments %}

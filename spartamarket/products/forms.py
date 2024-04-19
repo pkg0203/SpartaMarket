@@ -12,6 +12,10 @@ class ProductsForm(forms.ModelForm):
         ]
 
 class CommentsForm(forms.ModelForm):
+    content = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class':'form-control',
+            }))
     class Meta:
         model = Comments
         fields = [
