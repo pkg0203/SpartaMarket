@@ -53,14 +53,16 @@
     </div>
 
     {% if request.user != product.author %}
-    <form action="{%url 'products:jjim' product.pk%}" method="POST">
-        {%csrf_token%}
-        {%if request.user in product.jjimed.all%}
-
-            <span class="material-symbols-outlined" style="color: red;"><button type="submit">favorite</button></span>
-        
+    <form action="{% url 'products:jjim' product.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in product.jjimed.all %}
+        <button type="submit" class="btn btn-unstyled" style="font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;">
+            <span class="material-symbols-outlined" style="color: red;">favorite</span>
+        </button>
         {%else%}
-        <button type="submit">찜</button>
+        <button type="submit" class="btn btn-unstyled">
+            <span class="material-symbols-outlined" style="color: red;">favorite</span>
+        </button>
         {%endif%}
     </form>
     {%endif%}
