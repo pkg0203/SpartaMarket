@@ -59,7 +59,11 @@
                     </strong>
                 </a>
             </td>
+            {%if product.price != 0%}
             <td>{{product.price}}</td>
+            {%else%}
+            <td>나눔 중</td>
+            {%endif%}
             <td>{{product.is_viewed}}</td>
         </tr>
         {% endfor %}
@@ -88,7 +92,11 @@
                     </strong>
                 </a>
             </td>
+            {%if product.price != 0%}
             <td>{{product.price}}</td>
+            {%else%}
+            <td>나눔 중</td>
+            {%endif%}
             <td>{{product.is_viewed}}</td>
         </tr>
         {% endfor %}
