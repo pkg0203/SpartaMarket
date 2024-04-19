@@ -1,8 +1,9 @@
 # Sparta - Market
-**Django**를 배우고서 익숙해지고 개인과제로서 수행
+**Django**를 배우고서 익숙해지기 위해 개인과제로서 수행
 
 ## 📑 ERD
-![ERD drawio](https://github.com/pkg0203/SpartaMarket/assets/141356379/8d58cfa6-90c2-458e-ba43-a1417af9e413)
+
+![ERD2 drawio](https://github.com/pkg0203/SpartaMarket/assets/141356379/2f0ceb8b-e3d7-4835-a921-064d8a288494)
 
 
 ## 🖥️ 프로젝트 소개
@@ -31,6 +32,7 @@ https://teamsparta.notion.site/3964141ecf7b401d84de9dd72aa04b8b
 - Django의 AUTH_USER_MODEL로 AbstractUser를 상속받아 정의
 - AUTH_LOGIN / AUTH_LOGOUT을 통해 구현
 - 로그인을 해야만 아래의 모든 기능을 사용할 수 있음
+- 아이디를 클릭하면 해당 유저의 마이페이지로 이동
 - 탈퇴 기능은 **없음**
 #### 팔로우 기능
 - 자기 자신은 팔로우 불가
@@ -42,7 +44,8 @@ https://teamsparta.notion.site/3964141ecf7b401d84de9dd72aa04b8b
 - 본인이 작성하지 않은 글을 찜 가능
 - 게시글을 최신순 / 인기순으로 정렬 가능
 - 게시글의 image에 대한 CRUD는 구현하지 않음
+  - 단 default_image가 주어짐
 #### 마이페이지
 - 프로필 이미지 update 가능
 - 가입일과 내가 작성한 게시글, 내가 찜한 게시글 확인 가능
-
+- 그 게시글의 제목을 클릭하면 게시글로 이동 가능
