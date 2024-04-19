@@ -1,57 +1,107 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    <h1>제목 : {{product.title}}</h1>
-    <h2>내용 : {{product.content}}</h2>
-    <h2>작성자 : {{product.author}}</h2>
-    <h2>가격 : {{product.price}}</h2>
-    <h2>조회수 : {{product.is_viewed}}</h2>
-    <h2>찜 받은 수 : {{product.jjimed.count}}</h2>
+<div class="container m-2" style="background-color: black; border-radius: 30px;">
+    <div class='m-2' style="width: 40%; background-color: white; border-radius: 30px;">
+        <h1>
+            < {{product.title}}>
+        </h1>
+    </div>
+    <hr style="color: white; height: 3px;">
+    <div class="row" style="color: white;">
+        <div class="col d-flex align-items-center">
+            <img src="{{product.author.profile_image.url}}" style="width: 40px; margin-left: 15px; margin-right: 5px;">
+            <a href="{%url 'accounts:mypage' product.author.pk%}" style="text-decoration: none; color: white ;">
+                {{ product.author }}
+            </a>
+        </div>
+        <div class="col d-flex align-items-center">
+            <span class="material-symbols-outlined mr-2">payments</span>
+            {% if product.price != 0 %}
+            <div class="ml-2" style="background-color: gray; border-radius: 30px; width: 150px; margin-left: 10px;">
+                <strong>￦ {{ product.price }}</strong>
+            </div>
+            {% else %}
+            <div style="background-color: red; border-radius: 30px; width: 150px; margin-left: 10px;">
+                <strong>나눔 중!</strong>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col">
+            <h2>
+                <span class="material-symbols-outlined">visibility</span>
+                {{ product.is_viewed }}
+            </h2>
+        </div>
+        <div class="col">
+            <h2>
+                <span class="material-symbols-outlined">favorite</span>
+                {{ product.jjimed.count }}
+            </h2>
+        </div>
+    </div>
+    <hr style="color: white; height: 3px;">
+    <div class="row">
+        <div class="col">
+            <img src="{{product.image.url}}" class="m-3">
+        </div>
+        <div class="col" style="color: white;">
+            <h1>{{product.content}}</h1>
+        </div>
+    </div>
+
     {% if request.user != product.author %}
-        <form action="{%url 'products:jjim' product.pk%}" method="POST">
-            {%csrf_token%}
-            {%if request.user in product.jjimed.all%}
-                <button type="submit">찜 취소</button>
-            {%else%}
-                <button type="submit">찜</button>
-            {%endif%}
-        </form>
+    <form action="{%url 'products:jjim' product.pk%}" method="POST">
+        {%csrf_token%}
+        {%if request.user in product.jjimed.all%}
+        <button type="submit">찜 취소</button>
+        {%else%}
+        <button type="submit">찜</button>
+        {%endif%}
+    </form>
     {%endif%}
 
-    {%if product.image%}
-        <h1>이미지있음</h1>
-    {%endif%}
+</div>
 
-    {%if request.user == product.author %}
+{%if request.user == product.author %}
+<div class="row float-end">
+    <div class="col">
         <form action="{%url 'products:update' product.pk%}" method="GET">
-            <button type="submit">수정하기</button>
+            <button type="submit" class="btn btn-primary">수정하기</button>
         </form>
+    </div>
+    <div class="col">
         <form action="{%url 'products:delete' product.pk%}" method="POST">
             {%csrf_token%}
-            <button type="submit">삭제하기</button>
+            <button type="submit" class="btn btn-danger">삭제하기</button>
         </form>
-    {%endif%}
-    <hr>
-    <form action="{%url 'products:create_comment' product.pk%}" method="POST">
+    </div>
+</div>
+
+{%endif%}
+
+<form action="{%url 'products:create_comment' product.pk%}" method="POST">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">등록</button>
+</form>
+<hr>
+{% for comment in comments %}
+<ol>
+    {{ comment.author }}
+    {{ comment.content }}
+    {%if comment.author == request.user%}
+    <form action="{%url 'products:update_comment' comment.pk%}" method="GET">
+        <button type="submit">수정</button>
+    </form>
+    <form action="{%url 'products:delete_comment' comment.pk%}" method="POST">
         {%csrf_token%}
-        {{form.as_p}}
-        <button type="submit">등록</button>
-    </form><hr>
-    {% for comment in comments %}
-        <ol>
-            {{ comment.author }}
-            {{ comment.content }}
-        {%if comment.author == request.user%}
-            <form action="{%url 'products:update_comment' comment.pk%}" method="GET">
-                <button type="submit">수정</button>
-            </form>
-            <form action="{%url 'products:delete_comment' comment.pk%}" method="POST">
-                {%csrf_token%}
-                <button type="submit">삭제</button>
-            </form>
-        {%endif%}
-        </ol>
-    {% endfor %}
-    
+        <button type="submit">삭제</button>
+    </form>
+    {%endif%}
+</ol>
+{% endfor %}
+
 
 {%endblock content%}
