@@ -27,10 +27,11 @@ https://teamsparta.notion.site/3964141ecf7b401d84de9dd72aa04b8b
 
 
 ## 📌 주요 기능
-#### 로그인,로그아웃
+#### 로그인,로그아웃,계정
 - Django의 AUTH_USER_MODEL로 AbstractUser를 상속받아 정의
 - AUTH_LOGIN / AUTH_LOGOUT을 통해 구현
 - 로그인을 해야만 아래의 모든 기능을 사용할 수 있음
+- 탈퇴 기능은 **없음**
 #### 팔로우 기능
 - 자기 자신은 팔로우 불가
 - 마이페이지에 팔루워와 팔로잉 수 표시
@@ -40,6 +41,7 @@ https://teamsparta.notion.site/3964141ecf7b401d84de9dd72aa04b8b
 - 조회수 기능 구현
 - 본인이 작성하지 않은 글을 찜 가능
 - 게시글을 최신순 / 인기순으로 정렬 가능
+- 게시글의 image에 대한 CRUD는 구현하지 않음
 #### 마이페이지
 - 프로필 이미지 update 가능
 - 가입일과 내가 작성한 게시글, 내가 찜한 게시글 확인 가능
