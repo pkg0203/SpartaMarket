@@ -6,9 +6,9 @@ from django.views.decorators.http import (
     require_POST,
     require_http_methods
 )
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-)
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+
 from products.models import Products
 from .forms import *
 import ctypes
@@ -55,6 +55,7 @@ def signup(request):
             return redirect("index")
 
 
+@login_required()
 def mypage(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
     products = Products.objects.filter(author=pk)
@@ -80,12 +81,13 @@ def follow(request, pk):
 
 @require_POST
 def update_profile(request, pk):
-    user=get_object_or_404(get_user_model(), pk=pk)
-    form = CustomProfileUpdateForm(data=request.POST,files=request.FILES,instance=user)
+    user = get_object_or_404(get_user_model(), pk=pk)
+    form = CustomProfileUpdateForm(
+        data=request.POST, files=request.FILES, instance=user)
     print(request.FILES)
     if form.is_valid():
-        user=form.save(commit=False)
-        #column name과 input name이 같으면 get을 안 해도 된다.
-        user.profile_image=request.FILES.get('image')
+        user = form.save(commit=False)
+        # column name과 input name이 같으면 get을 안 해도 된다.
+        user.profile_image = request.FILES.get('image')
         user.save()
     return redirect('accounts:mypage', pk)
