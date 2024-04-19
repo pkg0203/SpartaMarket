@@ -1,5 +1,110 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    <h1>Hello {{request.user}}</h1>
+<h1>{{user}}</h1>
+<img src="{{user.profile_image.url}}" style="width:200px; margin-top: 10px;">
+{%if request.user == user%}
+<form action="{%url 'accounts:update_profile' user.pk%}" method="POST" enctype="multipart/form-data"
+    style="margin-top: 10px;">
+    {%csrf_token%}
+    <button type="submit" class="btn btn-primary">프로필 사진 변경</button>
+    <input type="file" class="btn btn-dark" name="image" required>
+</form>
+{%endif%}
+<h3>Sparta Market을 시작한 순간 : {{user.created_at}}</h3>
+<table class="table" style="width: 30%; text-align: center;">
+    <thead>
+        <tr>
+            <th scope="col">Followers</th>
+            <th scope="col">Following</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{user.followers.all.count}}</th>
+            <td><strong>{{user.follow.all.count}}</strong></td>
+        </tr>
+    </tbody>
+</table>
+{%if request.user != user %}
+<form action="{%url 'accounts:follow' user.pk%}" method="POST">
+    {%csrf_token%}
+    {%if request.user in user.followers.all %}
+    <button type="submit" class="btn btn-danger">Un-Follow</button>
+    {%else%}
+    <button type="submit" class="btn btn-success">Follow</button>
+    {%endif%}
+</form>
+{%endif%}
+<hr>
+<div class="row">
+    <div class="col">
+        <h2>My Product</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <th scope="row">{{product.pk}}</th>
+                    <td>
+                        <a href="{%url 'products:detail' product.pk%}" style="text-decoration: none; color: black;">
+                            <strong>
+                                {{product.title}}
+                            </strong>
+                        </a>
+                    </td>
+                    {%if product.price != 0%}
+                    <td>{{product.price}}</td>
+                    {%else%}
+                    <td>나눔 중</td>
+                    {%endif%}
+                    <td>{{product.is_viewed}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <h2>My Scrap</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in user.jjim.all %}
+                <tr>
+                    <th scope="row">{{product.pk}}</th>
+                    <td>
+                        <a href="{%url 'products:detail' product.pk%}" style="text-decoration: none; color: black;">
+                            <strong>
+                                {{product.title}}
+                            </strong>
+                        </a>
+                    </td>
+                    {%if product.price != 0%}
+                    <td>{{product.price}}</td>
+                    {%else%}
+                    <td>나눔 중</td>
+                    {%endif%}
+                    <td>{{product.is_viewed}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<hr>
 {%endblock content%}

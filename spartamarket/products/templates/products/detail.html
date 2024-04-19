@@ -1,6 +1,121 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<h1>detail</h1>
+<div class="container m-2" style="background-color: black; border-radius: 30px;">
+    <div class='m-2' style="width: 40%; background-color: white; border-radius: 30px;">
+        <h1>
+            < {{product.title}}>
+        </h1>
+    </div>
+    <hr style="color: white; height: 3px;">
+    <div class="row" style="color: white;">
+        <div class="col d-flex align-items-center">
+            <img src="{{product.author.profile_image.url}}" style="width: 40px; margin-left: 15px; margin-right: 5px;">
+            <a href="{%url 'accounts:mypage' product.author.pk%}" style="text-decoration: none; color: white ;">
+                {{ product.author }}
+            </a>
+        </div>
+        <div class="col d-flex align-items-center">
+            <span class="material-symbols-outlined mr-2">payments</span>
+            {% if product.price != 0 %}
+            <div class="ml-2" style="background-color: gray; border-radius: 30px; width: 150px; margin-left: 10px;">
+                <strong>￦ {{ product.price }}</strong>
+            </div>
+            {% else %}
+            <div style="background-color: red; border-radius: 30px; width: 150px; margin-left: 10px; ">
+                <strong>나눔 중!</strong>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col">
+            <h2>
+                <span class="material-symbols-outlined">visibility</span>
+                {{ product.is_viewed }}
+            </h2>
+        </div>
+        <div class="col" style="font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;">
+            <h2>
+                <span class="material-symbols-outlined" style="color: red;">favorite</span>
+                {{ product.jjimed.count }}
+            </h2>
+                
+        </div>
+    </div>
+    <hr style="color: white; height: 3px;">
+    <div class="row">
+        <div class="col">
+            <img src="{{product.image.url}}" class="m-3">
+        </div>
+        <div class="col" style="color: white;">
+            <h1>{{product.content}}</h1>
+        </div>
+    </div>
+
+    {% if request.user != product.author %}
+    <form action="{% url 'products:jjim' product.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in product.jjimed.all %}
+        <button type="submit" class="btn btn-unstyled" style="font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;">
+            <span class="material-symbols-outlined" style="color: red;">favorite</span>
+        </button>
+        {%else%}
+        <button type="submit" class="btn btn-unstyled">
+            <span class="material-symbols-outlined" style="color: red;">favorite</span>
+        </button>
+        {%endif%}
+    </form>
+    {%endif%}
+
+</div>
+
+{%if request.user == product.author %}
+<div class="row float-end">
+    <div class="col">
+        <form action="{%url 'products:update' product.pk%}" method="GET">
+            <button type="submit" class="btn btn-primary">수정하기</button>
+        </form>
+    </div>
+    <div class="col">
+        <form action="{%url 'products:delete' product.pk%}" method="POST">
+            {%csrf_token%}
+            <button type="submit" class="btn btn-danger">삭제하기</button>
+        </form>
+    </div>
+</div>
+{%endif%}
+
+<form action="{%url 'products:create_comment' product.pk%}" method="POST">
+    {%csrf_token%}
+    <div class="row">
+        <div class="col m-2">
+            <div class="d-flex" style="width: 60%;">
+                <div style="flex-grow: 1;">
+                    {{ form.content }}
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10px;">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<hr>
+{% for comment in comments %}
+<ol>
+    {{ comment.author }}
+    {{ comment.content }}
+    {%if comment.author == request.user%}
+    <form action="{%url 'products:update_comment' comment.pk%}" method="GET">
+        <button type="submit">수정</button>
+    </form>
+    <form action="{%url 'products:delete_comment' comment.pk%}" method="POST">
+        {%csrf_token%}
+        <button type="submit">삭제</button>
+    </form>
+    {%endif%}
+</ol>
+{% endfor %}
+
 
 {%endblock content%}

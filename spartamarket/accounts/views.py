@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
+from django.conf import settings
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.models import User
 from django.views.decorators.http import (
     require_POST,
     require_http_methods
 )
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordChangeForm,
-)
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+
+from products.models import Products
 from .forms import *
 import ctypes
 
@@ -28,7 +28,8 @@ def login(request):
             next_url = request.GET.get('next') or 'index'
             auth_login(request, form.get_user())
             return redirect(next_url)
-        ctypes.windll.user32.MessageBoxW(0, "아이디나 비밀번호가 유효하지 않습니다!", "Error", 16)
+        ctypes.windll.user32.MessageBoxW(
+            0, "아이디나 비밀번호가 유효하지 않습니다!", "Error", 16)
         return redirect('index')
 
 
@@ -48,10 +49,45 @@ def signup(request):
         return render(request, "accounts/signup.html", context)
     else:
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect("index")
-        
-def mypage(request,pk):
-    return render(request,"accounts/mypage.html")
+
+
+@login_required()
+def mypage(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    products = Products.objects.filter(author=pk)
+    context = {
+        "user": user,
+        "products": products,
+    }
+    return render(request, "accounts/mypage.html", context)
+
+
+@require_POST
+def follow(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    if request.user == user:
+        pass
+    else:
+        if request.user in user.followers.all():
+            user.followers.remove(request.user)
+        else:
+            user.followers.add(request.user)
+        return redirect('accounts:mypage', user.pk)
+
+
+@require_POST
+def update_profile(request, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    form = CustomProfileUpdateForm(
+        data=request.POST, files=request.FILES, instance=user)
+    print(request.FILES)
+    if form.is_valid():
+        user = form.save(commit=False)
+        # column name과 input name이 같으면 get을 안 해도 된다.
+        user.profile_image = request.FILES.get('image')
+        user.save()
+    return redirect('accounts:mypage', pk)
