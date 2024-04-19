@@ -2,19 +2,20 @@
 
 {%block content%}
 <div class="p-2 m-2">
-    <h1 class="p-1"style="width: 60%; background-color: black; color: white; border-radius: 30px;">Let's shopping</h1>
+    <h1 class="p-1" style="width: 60%; background-color: black; color: white; border-radius: 30px;">Let's shopping</h1>
 </div>
 <div class="row">
     <div>
 
     </div>
     <div>
+        <a href="{% url 'products:create' %}" class="float-end m-2">
+            <button class="btn btn-primary">글 작성</button>
+        </a>
         <form action="{% url 'products:search_and_sort' %}" method="GET">
             <input type="text" name="search" id="search" class="form-control">
             <div class="m-2" style="float: right;">
-                <form action="{% url 'products:create' %}" method="GET">
-                    <button type="submit" class="btn btn-primary">글 작성</button>
-                </form>
+
                 <button type="submit" name="sort" value="jjim" class="btn btn-danger">인기순으로 검색</button>
                 <button type="submit" name="sort" value="recent" class="btn btn-info">최신순으로 검색</button>
             </div>
