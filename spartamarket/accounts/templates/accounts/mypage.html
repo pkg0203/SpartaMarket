@@ -12,6 +12,20 @@
 </form>
 {%endif%}
 <h3>Sparta Market을 시작한 순간 : {{user.created_at}}</h3>
+<table class="table" style="width: 30%; text-align: center;">
+    <thead>
+        <tr>
+            <th scope="col">Followers</th>
+            <th scope="col">Following</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{user.followers.all.count}}</th>
+            <td><strong>{{user.follow.all.count}}</strong></td>
+        </tr>
+    </tbody>
+</table>
 {%if request.user != user %}
 <form action="{%url 'accounts:follow' user.pk%}" method="POST">
     {%csrf_token%}
@@ -23,38 +37,34 @@
 </form>
 {%endif%}
 <hr>
-<h2>Follower : {{user.followers.all.count}}</h2>
-<h2>Following : {{user.follow.all.count}}</h2>
-<hr>
 <h2>내 게시글</h2>
 {%if products != null %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">제목</th>
-                <th scope="col">가격</th>
-                <th scope="col">조회수</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <th scope="row">{{product.pk}}</th>
-                <td>
-                    <a href="{%url 'products:detail' product.pk%}"
-                        style="text-decoration: none; color: black;">
-                        <strong>
-                            {{product.title}}
-                        </strong>
-                    </a>
-                </td>
-                <td>{{product.price}}</td>
-                <td>{{product.is_viewed}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">제목</th>
+            <th scope="col">가격</th>
+            <th scope="col">조회수</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <th scope="row">{{product.pk}}</th>
+            <td>
+                <a href="{%url 'products:detail' product.pk%}" style="text-decoration: none; color: black;">
+                    <strong>
+                        {{product.title}}
+                    </strong>
+                </a>
+            </td>
+            <td>{{product.price}}</td>
+            <td>{{product.is_viewed}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {%endif%}
 <hr>
 <h2>내가 찜한 글</h2>
@@ -72,8 +82,7 @@
         <tr>
             <th scope="row">{{product.pk}}</th>
             <td>
-                <a href="{%url 'products:detail' product.pk%}"
-                    style="text-decoration: none; color: black;">
+                <a href="{%url 'products:detail' product.pk%}" style="text-decoration: none; color: black;">
                     <strong>
                         {{product.title}}
                     </strong>
