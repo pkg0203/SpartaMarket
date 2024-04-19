@@ -14,10 +14,25 @@
         <div class="card-body">
             <div class="row">
                 <h5 class="card-title"><{{ product.title }}></h5>
-                <h5 class="card-content">{{ product.author }}</h5>
+                <h5 class="card-content">
+                    <img src="{{product.author.profile_image.url}}" style="width: 25px;">
+                    <a href="{%url 'accounts:mypage' product.author.pk%}" style="text-decoration: none; color: white ;">
+                        {{ product.author }}
+                    </a>
+                </h5>
             </div>
-            <p class="card-text">{{ product.price }}</p>
-            <a href="{% url 'products:detail' product.pk %}" class="btn btn-primary">글 자세히 보기</a>
+            {%if product.price != 0 %}
+            <p class="card-text" style="width: 60%; background-color: gray; border-radius: 30px;">
+                <strong>￦ {{ product.price }}</strong>
+            </p>
+            {%else%}
+            <p class="card-text" style="width: 60%; background-color: red; border-radius: 30px;">
+                <strong>나눔 중!</strong>
+            </p>
+            {%endif%}
+            <a href="{% url 'products:detail' product.pk %}" class="btn btn-primary mb-1">
+                <strong>글 자세히 보기</strong>
+            </a>
             <div style="color:red">
                 {% for hashtag in product.hashtags.all %}
                 #{{ hashtag.title }}
