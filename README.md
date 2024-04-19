@@ -2,6 +2,7 @@
 **Django**를 배우고서 익숙해지고 개인과제로서 수행
 
 ## 📑 ERD
+![ERD drawio](https://github.com/pkg0203/SpartaMarket/assets/141356379/8d58cfa6-90c2-458e-ba43-a1417af9e413)
 
 
 ## 🖥️ 프로젝트 소개
