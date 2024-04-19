@@ -3,7 +3,8 @@
 
 ## 📑 ERD
 
-![ERD2 drawio](https://github.com/pkg0203/SpartaMarket/assets/141356379/2f0ceb8b-e3d7-4835-a921-064d8a288494)
+![ERD3 drawio](https://github.com/pkg0203/SpartaMarket/assets/141356379/bfe73f90-f7f9-4e89-9d14-168b7521ea25)
+
 
 
 ## 🖥️ 프로젝트 소개
