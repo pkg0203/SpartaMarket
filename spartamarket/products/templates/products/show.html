@@ -1,15 +1,17 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<h1>Let's shopping</h1>
+<div class="p-2 m-2">
+    <h1 class="p-1"style="width: 60%; background-color: black; color: white; border-radius: 30px;">Let's shopping</h1>
+</div>
 <div class="row">
     <div>
-        
+
     </div>
     <div>
         <form action="{% url 'products:search_and_sort' %}" method="GET">
             <input type="text" name="search" id="search" class="form-control">
-            <div class="m-2"style="float: right;">
+            <div class="m-2" style="float: right;">
                 <form action="{% url 'products:create' %}" method="GET">
                     <button type="submit" class="btn btn-primary">글 작성</button>
                 </form>
@@ -26,7 +28,9 @@
         <img src="{{ product.image.url }}" class="card-img-top">
         <div class="card-body">
             <div class="row">
-                <h5 class="card-title"><{{ product.title }}></h5>
+                <h5 class="card-title">
+                    <{{ product.title }}>
+                </h5>
                 <h5 class="card-content">
                     <img src="{{product.author.profile_image.url}}" style="width: 25px;">
                     <a href="{%url 'accounts:mypage' product.author.pk%}" style="text-decoration: none; color: white ;">
